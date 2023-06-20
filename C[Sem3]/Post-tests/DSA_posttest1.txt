@@ -1,0 +1,23 @@
+1.      Why is the letter ‘m’ selected as the root of the tree?
+
+At ant instance when an element is to be inserted, first we locate its proper location. Then we start searching from the root node, then if data is less than key value, we search for empty location in left subtree and insert  data. Otherwise, we search for empty location in right subtree and insert data. The first inserted key became root so here m became root and afterward if key is less than root data then we insert in left otherwise we insert in right.
+
+2.      What are the advantages of using BST for a dictionary? 
+
+Advantages of BST for dictionary is that:
+
+Binary search tree (BST) is one such special kind of binary tree where each node contains only smaller values in its left subtree & only larger values in its right subtree. So traversal in such tree is efficient.
+It also speeds up the insertion and deletion operations as compare to that in array and linked list.
+
+3.      What are the disadvantages of using a BST? Suggest improvements and alternatives.
+
+
+
+The disadvantage of BST data structure is that at a specific time, degree of the tree will always increase, resulting in low efficiency of search.
+We are supposed to always implement a balanced Binary search tree (BST).
+
+Alternative for this problem is that we can use AVL tree or 2-3 tree.
+
+4.      What is the space and time complexity of this design?
+
+Here, the space complexity for this design is O(n) where n is number of nodes and time complexity is O(h) where h=3.

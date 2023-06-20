@@ -1,0 +1,318 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node
+{
+    char name[20],b_name[20];
+    int lap;
+    struct node *next ;
+    struct node *prev;
+};
+typedef struct node *NODE;
+NODE insert_rear(NODE);
+NODE getnode();
+NODE delete_spec(NODE,char []);
+void display(NODE);
+NODE update(NODE head);
+NODE insert_before(NODE,NODE);
+NODE change(NODE);
+
+int main()
+{
+    NODE head=NULL;
+    char R[20];
+    int n;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+        head=insert_rear(head);
+    display(head);
+    scanf("%s",R);
+    delete_spec(head,R);
+    head=update(head);
+    display(head);
+
+    head=change(head);
+    head=change(head);
+
+    head=update(head);
+    display(head);
+
+    printf("%s\t%s\t%d\t",head->name,head->b_name,head->lap);
+    return 0;
+}
+
+NODE getnode()
+{
+    NODE n;
+    n=malloc(sizeof(struct node));
+    if(n==NULL)
+    {
+        printf("ERROR");
+        exit(0);
+    }
+    scanf("%s%s%d",n->name,n->b_name,&n->lap);
+    n->next=n;
+    n->prev=n;
+    return n;
+}
+
+NODE insert_rear(NODE head)
+{
+    NODE nn=getnode();
+    if(head==NULL)
+    {
+        return nn;
+    }
+    else
+    {
+        NODE cur=head->prev;
+        cur->next=nn;
+        nn->prev=cur;
+        head->prev=nn;
+        nn->next=head;
+        return head;
+    }
+}
+
+void display(NODE head)
+{
+    NODE cur=head;
+    if(head==NULL)
+        printf("Circular DLL of mangoes is empty.\n");
+    else
+    {
+        do
+        {
+            printf("%s\t%s\t%d\t",cur->name,cur->b_name,cur->lap);
+            cur = cur->next;
+        }while(cur != head);
+        printf("\n");
+    }
+}
+
+NODE delete_front(NODE head)
+{
+
+    if(head==NULL)
+    {
+        printf("Empty List\n");
+        return NULL;
+    }
+    if(head->next==head && head->prev==head)
+    {
+        free(head);
+        head=NULL;
+        return head;
+    }
+    NODE temp,last;
+    temp=head;
+    last=head->prev;
+    head=head->next;
+    head->prev=last;
+    last->next=head;
+    free(temp);
+
+    return head;
+
+}
+
+NODE delete_rear(NODE head)
+{
+
+    if(head==NULL)
+    {
+        printf("Empty List\n");
+        return NULL;
+    }
+    if(head->next==head && head->prev==head)
+    {
+        free(head);
+        head=NULL;
+        return head;
+    }
+
+    NODE last=head->prev;
+    last->prev->next=head;
+    head->prev=last->prev;
+    free(last);
+    return head;
+
+}
+
+NODE update(NODE head)
+{
+    NODE cur=head;
+    do
+    {
+        cur->lap++;
+        cur=cur->next;
+    }
+    while(cur!=head);
+    return head;
+}
+
+NODE delete_spec(NODE head,char key[20])
+{
+    if(head==NULL)
+    {
+        printf("List is empty\n");
+        return head;
+    }
+    if(strcmp(head->name,key)==0)
+        {
+                head=delete_front(head);
+                return head;
+
+        }
+
+        NODE cur=head,p=NULL;
+
+        while(cur->next!=head &&strcmp(cur->name,key)!=0)
+        {
+             p=cur;
+            cur=cur->next;
+        }
+
+       if(cur->next==head && strcmp(cur->name,key)==0)
+       {
+
+            head=delete_rear(head);
+            return head;
+        }
+        else if(cur->next==head &&strcmp(cur->name,key)==0)
+            {
+            printf("Node not found!!unable to delete\n");
+            return head;
+            }
+
+        else
+        {
+
+            p->next=cur->next;
+            cur->next->prev=p;
+            free(cur);
+            return head;
+        }
+
+}
+NODE change(NODE head)
+{
+    char key[20];
+    scanf("%s",key);
+    if(head==NULL)
+    {
+        printf("list is Empty");
+        return(head);
+    }
+    else
+    {
+        NODE temp=NULL ,last=NULL;
+        if(strcmp(head->name,key)==0)
+        {
+            temp=head;
+            last=head->prev;
+            head=head->next;
+            head->prev=last;
+            last->next=head;
+            head=insert_before(head, temp);
+            return head;
+        }
+        else
+        {
+            NODE cur=head , p=NULL;
+            while(cur->next!=head)
+            {
+                if(strcmp(cur->name,key)==0)
+                    break;
+                p=cur;
+                cur=cur->next;
+            }
+            if(cur->next==head)
+            {
+                if(strcmp(cur->name,key)==0)
+                {
+                    temp=cur;
+                    p->next=cur->next;
+                    cur->next->prev=p;
+                    head=insert_before(head, temp);
+                    return head;
+                }
+                else
+                {
+                    printf("Node dosen't exist");
+                    return(head);
+                }
+            }
+            else
+            {
+                temp=cur;
+                p->next=cur->next;
+                cur->next->prev=p;
+                head=insert_before(head, temp);
+                return head;
+            }
+        }
+    }
+}
+
+NODE insert_before(NODE head,NODE temp)
+{
+    char key[20];
+    scanf("%s",key);
+    if(head==NULL)
+    {
+        printf("list is Empty");
+        return(head);
+    }
+    else
+    { 
+        if(strcmp(head->name,key)==0)
+        {
+            NODE last=head->prev;
+            temp->next=head;
+            temp->prev=last;
+            head->prev=temp;
+            last->next=temp;
+            head=temp;
+            return head;
+        }
+        else
+        {
+            NODE cur=head , p=NULL;
+            while(cur->next!=head)
+            {
+                if(strcmp(cur->name,key)==0)
+                    break;
+                p=cur;
+                cur=cur->next;
+            }
+            if(cur->next==head)
+            {
+                if(strcmp(cur->name,key)==0)
+                {
+                    temp->next=cur;
+                    temp->prev=p;
+                    p->next=temp;
+                    cur->prev=temp;
+                    return head;
+                }
+                else
+                {
+                    printf("Node dosen't exist");
+                    return(head);
+                }
+            }
+            else
+            {
+                    temp->next=cur;
+                    temp->prev=p;
+                    p->next=temp;
+                    cur->prev=temp;
+                    return head;
+            }
+        }
+        
+    }
+}

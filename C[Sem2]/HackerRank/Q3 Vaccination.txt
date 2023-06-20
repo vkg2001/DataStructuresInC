@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct kle
+{
+    char des[20],name[20],rel[3];
+    int yob;
+    struct kle* next;
+};
+typedef struct kle* NODE;
+NODE read()
+{
+    NODE newn=malloc(sizeof(struct kle));
+    if(newn==NULL)
+    {
+        printf("node not created");
+        exit(0);
+    }
+    scanf("%s%d%s%s",newn->des,&newn->yob,newn->name,newn->rel);
+    newn->next=NULL;
+    return newn;
+}
+NODE insert_end(NODE head)
+{
+    NODE newn=read(),cur=head;
+    if(head==NULL)
+    {
+        head=newn;
+        return head;
+    }
+    while(cur->next!=NULL)
+        cur=cur->next;
+    cur->next=newn;
+    return head;
+}
+void disp(NODE head)
+{
+    NODE cur=head;
+    while(cur!=NULL)
+    {
+        if(strcmp(cur->des,"KLETU")==0)
+            printf("%s %d %s %s\n",cur->des,cur->yob,cur->name,cur->rel);
+        cur=cur->next;
+    }
+    cur=head;
+    while(cur!=NULL)
+    {
+        if(strcmp(cur->rel,"Yes")==0)
+            printf("%s %d %s %s\n",cur->des,cur->yob,cur->name,cur->rel);
+        cur=cur->next;
+    }
+}
+int main()
+{
+    int n,i;
+    NODE head=NULL;
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        head=insert_end(head);
+    }
+    disp(head);
+    return 0;
+}

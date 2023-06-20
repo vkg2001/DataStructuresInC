@@ -1,0 +1,125 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct soldier
+{
+    char name[20],gender[10];
+    int age;
+    struct soldier *next;
+};
+typedef struct soldier *NODE;
+
+NODE getnode()
+{
+   NODE newn;
+    newn=(NODE)malloc(sizeof(struct soldier));
+    if(newn==NULL)
+    {
+        printf("Not created\n");
+        exit(0);
+    }
+    scanf("%s%s%d",newn->name,newn->gender,&newn->age);
+    newn->next=NULL;
+    return newn;
+}
+NODE insert_end(NODE head)
+{
+    NODE newn,cur=head;
+    newn=getnode();
+    if(head==NULL)
+    {
+        return newn;
+    }
+    else
+    {
+        while(cur->next!=NULL)
+        cur=cur->next;
+    }
+    cur->next=newn;
+    return head;
+}
+NODE insert_before(NODE head)
+{
+    NODE newn,cur=head,prev=NULL;
+    newn=getnode();
+    if(head==NULL)
+    {
+        return newn;
+    }
+    if(head->age==newn->age)
+    {
+        newn->next=head;
+        head=newn;
+        return head;
+    }
+    else
+    {
+    while(cur->age!=newn->age)
+    {
+            prev=cur;
+            cur=cur->next;
+    }
+    prev->next=newn;
+    newn->next=cur;
+    return head;
+    }
+}
+void display_list(NODE head)
+{
+    NODE cur=NULL;
+    if(head==NULL)
+    {
+        printf("No list is created\n");
+    }
+    else
+    {
+        cur=head;
+        while(cur!=NULL)
+        {
+           printf("%s\t%s\t%d\n",cur->name,cur->gender,cur->age);
+        cur=cur->next;
+        }
+    }
+}
+NODE position(NODE head)
+{
+    NODE cur=head;
+    int count=1;
+    if(head==NULL)
+    {
+        printf("List is empty\n");
+    }
+    else
+    {
+        while(strcmp(cur->gender,"female")!=0)
+        {
+          count=count+1;
+          cur=cur->next;
+        }
+    printf("%d\n",count);
+    }
+    return head;
+}
+int main()
+{
+    NODE head=NULL;
+    int i,n,N;
+    scanf("%d",&N);
+    scanf("%d",&n);
+    if(N<5)
+    { 
+        printf("Soldiers cannot go on a war\n");
+      
+    }
+    else
+    {
+        for(i=0;i<N;i++)
+      {
+        head=insert_end(head);
+      }
+        head=insert_before(head);
+        display_list(head);
+        head=position(head);
+    }
+    
+    return 0;
+}

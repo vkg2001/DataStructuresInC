@@ -1,0 +1,25 @@
+1. We can use Dijkstra's algorithm to find the path from Hubballi to Birmingham.
+
+
+
+2. i. Once it has been carried out you can find the least time path to all permanently labelled cities.
+
+ii. It always returns the single source shortest & optimal path.
+
+iii. The main advantage of Dijkstra’s algorithm is it's considerably low complex.
+
+iv. We can also use min-priority queue to improve it's efficiency.
+
+
+
+3. i. Other algorithms like Floyd's and Warshall's give us the all pair shortest path.
+
+ii. Time Complexity of Floyd Warshall is O(V^3).
+
+iii. It does not return the details of the paths. 
+
+iv. Another disadvantage is that it cannot handle negative edges. This leads to acyclic graphs.
+
+
+
+4. Time Complexity of Dijkstra's Algorithm is O(V^2) and using min-priority queue it can be dropped down to O(V+E*(log V)), where V- vertices and E- edges.

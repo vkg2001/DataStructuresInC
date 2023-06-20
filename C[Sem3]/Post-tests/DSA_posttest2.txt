@@ -1,0 +1,12 @@
+1. Auto-complete features are used in search engines where the user is supposed to enter a prefix of his search query and the search engine gives user the recommendations based on past searches by different users to auto-complete.
+It also suggests us the appropriate words that we are trying to search for.
+In case if we don't know the exact spelling of the word or we type it slightly wrong then comes the role of auto-complete features and guides us by suggesting the most appropriate word.
+It is widely used & seen in browsers, source code editors, database query tools, email programs, word processors, etc.
+
+2. The motivation behind designing auto-complete might be providing better search results to users thus improving user experience. Search suggestions can inspire product discovery, correct misspellings, narrow down user's scope by category. Overall it is focuses on saving user's time and providing better search results.
+This also leads to the reduction in the number of people leaving the site,
+ which means that the site has more time and opportunities to convert it's visitors to buyers.
+
+3. The data structure which can be used to implement the auto-complete is Trie data structure as it is efficient in searching strings on basis of the prefix entered by user. Auto-complete can be implemented using standard trie search algorithm which is now used to search for given query.
+
+4. Suppose memory footprint of single node is m references & the tree has n nodes then we have space complexity to be O(m*n). Also the time complexity of such data structure is O(n), where n is taken to be the key length.

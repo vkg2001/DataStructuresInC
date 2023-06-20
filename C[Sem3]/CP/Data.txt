@@ -1,0 +1,7 @@
+Raktkendra   Hosur    60    45    98  87
+Bloodbank   Vidyanagar    45    40    78  32
+ABCBank     NBCRoad  35.5  23    45  24
+Opositive      GTRoad   23    20    35  32
+BloodKendra      MGRoad   55    12    32  69
+CityBloodBank     ROTStreet   57    49    78  86
+ 

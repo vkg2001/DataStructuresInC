@@ -1,0 +1,13 @@
+aware arjit 7.45 2018
+tereliye atif 8.10 2001
+fida sonu 6.20 2001
+deewana sonu 7.48 1995
+sonu
+tereliye
+2001
+
+
+bm101 kumar blr mys 20.6
+bm105 raj blr mys 10.5
+mb201 watson mys blr 12.4
+bm150 jay blr mys 30.5

@@ -1,0 +1,6 @@
+Raktkendra 0
+Bloodbank  1 
+ABCBank 2
+Opositive  3
+BloodKendra  4
+CityBloodBank   5 

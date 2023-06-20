@@ -1,0 +1,517 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct racer
+{
+    int laps;
+    char name[20],bike[20];
+    struct racer *prev, *next;
+};
+
+typedef struct racer *NODE;
+
+NODE getnewnode();
+NODE insert_end(NODE head);
+void display(NODE head);
+NODE delete_specific(NODE head,char []);
+NODE rearrange(NODE head);
+
+int main() {
+    NODE head=NULL;
+    int n;
+    char dname[20];
+    scanf("%d",&n);
+    if(n==5)
+    {  
+    for(int i=0;i<5;i++)
+        head=insert_end(head);
+    }
+    display(head);
+    scanf("%s",dname);
+    head=delete_specific(head,dname);
+    display(head);
+    NODE rearrange(NODE head);
+    display(head);
+    return 0;
+}
+
+NODE getnewnode()
+{
+    NODE newn=(NODE)malloc(sizeof(struct racer));
+    if(newn==NULL)
+    {
+        printf("Memory not allocated\n");
+        exit(0);
+    }
+    else
+    {
+        scanf("%s\t%s\t%d\n",newn->name,newn->bike,&newn->laps);
+
+        newn->next=NULL;
+        newn->prev=NULL;
+    }
+    return newn;
+}
+
+NODE insert_end(NODE head)
+{
+    NODE cur=NULL;
+    NODE newn=getnewnode();
+    if(head==NULL)
+        head=newn;
+    else
+    {
+        NODE cur=head;
+        while(cur->next!= NULL)
+            {
+            cur=cur->next;
+            }
+    cur->next=newn;
+    newn->prev=cur;
+    }
+    return head;
+}
+
+NODE delete_specific(NODE head, char dname[20])
+{
+    NODE newn;
+    if(head==NULL)
+    {
+        printf("List is empty\n");
+        return head;
+    }
+    if(head->next==NULL)
+        {
+        if(strcmp(head->name,dname)==0)
+            {
+                //printf("Deleted %s\n",head->name);
+                free(head);
+                head=NULL;
+                return head;
+            }
+        }
+     if(head->next!=NULL)
+        {
+        if(strcmp(head->name,dname)==0)
+            {
+                NODE temp=head;
+                head=head->next;
+                //printf("Deleted %s\n",temp->name);
+                free(temp);
+                return head;
+            }
+        }
+        NODE cur=head,p=NULL;
+        while(cur->next!=NULL)
+        {
+            if(strcmp(cur->name,dname)==0 )
+            {
+                break;
+            }
+            p=cur;
+            cur=cur->next;
+        }
+       if(cur->next==NULL)
+        {
+           if(strcmp(cur->name,dname)==0)
+            {
+                p->next=NULL;
+                //printf("Deleted %s\n",cur->name);
+                free(cur);
+                return head;
+            }
+        else
+            {
+                //printf("Not found!!unable to delete\n");
+                return head;
+            }
+        }
+        else
+        {
+            p->next=cur->next;
+            cur->next->prev=p;
+            //printf("Deleted %s\n",cur->name);
+            free(cur);
+            return head;
+        }
+}
+
+void display(NODE head)
+{
+    NODE cur = head;
+    if(head == NULL)
+        printf("\nList is Empty!!!");
+    else
+    {
+        //printf("\nList elements are: \n");
+        while(cur!= NULL)
+        {
+        printf("%s\t%s\t%d\t", cur->name, cur->bike, cur->laps++);
+        cur = cur->next;
+        }
+    }
+    printf("\n");
+}
+
+NODE rearrange(NODE head)
+{
+    if (head == NULL||head->next == NULL) {
+        return head;
+    }
+ NODE curr = head, prev = NULL;
+    while (curr != NULL && curr->next != NULL)
+    {
+        NODE temp = curr->next;
+        curr->next = temp->next;
+        temp->next = curr;
+ 
+        if (prev == NULL) {
+            head = temp;
+        }
+        else {
+            prev->next = temp;
+        }
+ 
+        prev = curr;
+        curr = curr->next;
+    }
+    return head;
+}
+
+
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct racer
+{
+    int laps;
+    char name[20],bike[20];
+    struct racer *prev, *next;
+};
+
+typedef struct racer *NODE;
+
+NODE getnewnode();
+NODE insert_end(NODE head);
+void display(NODE head);
+NODE insert_before(NODE head,NODE temp, char []);
+NODE delete_specific(NODE head,char []);
+NODE delete_temp(NODE head,NODE temp, char []);
+
+int main() {
+    NODE head=NULL;
+    NODE del=NULL;
+    int n;
+    char dname[20],r1[20],r2[20],r3[20],r4[20];
+    scanf("%d",&n);
+    if(n==5){
+    {  
+    for(int i=0;i<5;i++)
+        head=insert_end(head);
+    }
+    display(head);
+    scanf("%s",dname);
+    head=delete_specific(head,dname);
+    display(head);
+    scanf("%s",r1);
+    del=delete_temp(head,del,r1);
+    scanf("%s",r2);
+    head=insert_before(head,del,r2);
+    scanf("%s",r3);
+    del=delete_temp(head,del,r3);
+    scanf("%s",r4);
+    head=insert_before(head,del,r4);
+    display(head);
+        }
+    else{
+        printf("Not possible");
+    }
+    return 0;
+}
+
+NODE getnewnode()
+{
+    NODE newn=(NODE)malloc(sizeof(struct racer));
+    if(newn==NULL)
+    {
+        printf("Memory not allocated\n");
+        exit(0);
+    }
+    else
+    {
+        scanf("%s\t%s\t%d\n",newn->name,newn->bike,&newn->laps);
+
+        newn->next=newn;
+        newn->prev=newn;
+    }
+    return newn;
+}
+
+NODE insert_end(NODE head)
+{
+    NODE cur=NULL;
+    NODE newn=getnewnode();
+    if(head==NULL)
+        head=newn;
+    else
+    {
+        cur=head->prev;
+
+        cur->next=newn;
+        newn->prev=cur;
+
+        newn->next=head;
+        head->prev=newn;
+    }
+    return head;
+}
+
+NODE delete_specific(NODE head, char dname[20])
+{
+    if(head==NULL)
+    {
+        printf("List is empty\n");
+        return head;
+    }
+    if(head->next==NULL)
+        {
+        if(strcmp(head->name,dname)==0)
+            {
+                //printf("Deleted %s\n",head->name);
+                free(head);
+                head=NULL;
+                return head;
+            }
+        }
+     if(head->next!=NULL)
+        {
+        if(strcmp(head->name,dname)==0)
+            {
+                NODE temp=head;
+                head=head->next;
+                //printf("Deleted %s\n",temp->name);
+                free(temp);
+                return head;
+            }
+        }
+        NODE cur=head,p=NULL;
+        while(cur->next!=NULL)
+        {
+            if(strcmp(cur->name,dname)==0 )
+            {
+                break;
+            }
+            p=cur;
+            cur=cur->next;
+        }
+       if(cur->next==NULL)
+        {
+           if(strcmp(cur->name,dname)==0)
+            {
+                p->next=NULL;
+                //printf("Deleted %s\n",cur->name);
+                free(cur);
+                return head;
+            }
+        else
+            {
+                //printf("Not found!!unable to delete\n");
+                return head;
+            }
+        }
+        else
+        {
+            p->next=cur->next;
+            cur->next->prev=p;
+            //printf("Deleted %s\n",cur->name);
+            free(cur);
+            return head;
+        }
+}
+
+void display(NODE head)
+{
+    NODE cur = head;
+    if(head == NULL)
+        printf("\nList is Empty!!!");
+    else
+    {
+        do
+        {
+        printf("%s\t%s\t%d\t", cur->name, cur->bike, cur->laps++);
+            cur=cur->next;
+        }while(cur!=head);
+    }
+    printf("\n");
+}
+
+
+NODE insert_before(NODE head,NODE temp)
+{
+    char key[20];
+    scanf("%s",key);
+    if(head==NULL)
+    {
+        printf("list is Empty");
+        return(head);
+    }
+    else
+    { 
+        if(strcmp(head->name,key)==0)
+        {
+            NODE last=head->prev;
+            temp->next=head;
+            temp->prev=last;
+            head->prev=temp;
+            last->next=temp;
+            head=temp;
+            return head;
+        }
+        else
+        {
+            NODE cur=head , p=NULL;
+            while(cur->next!=head)
+            {
+                if(strcmp(cur->name,key)==0)
+                    break;
+                p=cur;
+                cur=cur->next;
+            }
+            if(cur->next==head)
+            {
+                if(strcmp(cur->name,key)==0)
+                {
+                    temp->next=cur;
+                    temp->prev=p;
+                    p->next=temp;
+                    cur->prev=temp;
+                    return head;
+                }
+                else
+                {
+                    printf("Node dosen't exist");
+                    return(head);
+                }
+            }
+            else
+            {
+                    temp->next=cur;
+                    temp->prev=p;
+                    p->next=temp;
+                    cur->prev=temp;
+                    return head;
+            }
+        }
+        
+    }
+}
+
+/**NODE delete_temp(NODE head,NODE temp, char delracer[])
+{
+    NODE back=NULL, cur=head, del=NULL, fwd=NULL;
+     if(head==NULL)
+        printf("Circular DLL of grades is empty\n");
+    else if(head->next==head && strcmp(head->name,delracer)==0)//only one node
+    {
+        temp=head;
+        free(head);
+        head=NULL;
+    }
+    else if(strcmp(head->name,delracer)==0)//delete front function
+    {
+        del = head;
+        back = head->prev;
+
+        head = head->next;
+
+        head->prev = back;
+        back->next = head;
+    }
+    else
+    {
+        while(cur->next != head)
+        {
+            if(strcmp(cur->name,delracer)==0)
+                break;
+            back = cur;
+            cur = cur->next;
+        }
+        fwd = cur->next;
+        back->next = fwd;
+        fwd->prev = back;
+        temp=cur;
+        free(cur);
+    }
+    return head;
+}**/
+
+/**NODE delete_temp(NODE head,NODE x, char dname[20])
+{
+    if(head==NULL)
+    {
+        printf("List is empty\n");
+        return head;
+    }
+    if(head->next==NULL)
+        {
+        if(strcmp(head->name,dname)==0)
+            {
+                x=head;
+                free(head);
+                head=NULL;
+                return head;
+            }
+        }
+     if(head->next!=NULL)
+        {
+        if(strcmp(head->name,dname)==0)
+            {
+                NODE temp=head;
+                head=head->next;
+                x=temp;
+                free(temp);
+                return head;
+            }
+        }
+        NODE cur=head,p=NULL;
+        while(cur->next!=NULL)
+        {
+            if(strcmp(cur->name,dname)==0 )
+            {
+                break;
+            }
+            p=cur;
+            cur=cur->next;
+        }
+       if(cur->next==NULL)
+        {
+           if(strcmp(cur->name,dname)==0)
+            {
+                p->next=NULL;
+                x=cur;
+                free(cur);
+                return head;
+            }
+        else
+            {
+                //printf("Not found!!unable to delete\n");
+                return head;
+            }
+        }
+        else
+        {
+            p->next=cur->next;
+            cur->next->prev=p;
+            x=cur;
+            free(cur);
+            return head;
+        }
+}
+**/

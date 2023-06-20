@@ -1,0 +1,12 @@
+a	b	c
+d	e	f
+f	h	i
+a	x	GK
+b	y	Sports
+c	z	GK
+d	u	Sports
+e	v	Sports
+a	w	GK
+b	x	GK
+c	y	Sports
+d	z	Sports

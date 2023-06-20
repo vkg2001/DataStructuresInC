@@ -1,0 +1,7 @@
+describe your understanding of the model
+
+what are significant parameters that decide win probability
+
+what are disadvantages of presenting the live win probability
+
+can the probability ever be 100%? Justify.

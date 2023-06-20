@@ -1,0 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct student
+{
+    int size,top;
+    int *st,*tpos;
+};
+typedef struct student ST;
+
+void push(ST *ptr,int n)
+{
+    ptr->st[++ptr->top]=n;
+}
+
+void push2(ST *ptr,int n)
+{
+    //without increamenting top
+    ptr->tpos[ptr->top]=n;
+}
+
+void pop(ST *ptr)
+{
+    ptr->top--;
+}
+
+int isempty(ST *ptr)
+{
+    if (ptr->top==-1)
+        return 1;
+    return 0;
+}
+
+void reverse(int a[],int front,int back)
+{
+    int temp;
+    while(front<back)
+    {
+        temp=a[front];
+        a[front]=a[back];
+        a[back]=temp;
+        front++;
+        back--;
+    }
+}
+
+int main()
+{
+    int t,n;
+    scanf("%d",&t);
+    if(t<=10)
+    {
+        for (int i=0;i<t;i++)
+    {
+        scanf("%d",&n);
+        int a[n],left[n],right[n];
+        for (int j=0;j<n;j++)
+        {
+            scanf("%d",&a[j]);
+            left[j]=right[j]=0;
+        }
+        ST *s=(ST*)malloc(sizeof(struct student));
+        s->size=n; s->top=0;
+        s->st=(int*)malloc(sizeof(int)*n);
+        s->st[s->top]=a[0];
+        s->tpos=(int*)malloc(sizeof(int)*n);
+        s->tpos[s->top]=0;
+        for(int k=1;k<n;k++)
+        {
+            if(a[k]<(s->st[s->top]))
+            {
+                push(s,a[k]);
+                push2(s,k);
+                continue;
+            }
+            while(a[k]>(s->st[s->top])&&!isempty(s))
+            {
+                pop(s);
+            }
+            if(a[k]<(s->st[s->top])||isempty(s))
+            {
+                push(s,a[k]);
+                push2(s,k);
+            }
+            else if(a[k]==(s->st[s->top]))
+            {
+                left[k]=1+left[s->tpos[s->top]];
+                pop(s);
+                push(s,a[k]);
+                push2(s,k);
+            }
+        }
+        reverse(a,0,n-1);
+        s->size=n;
+        s->top=0;
+        s->st[s->top]=a[0];
+        s->tpos[s->top]=0;
+        for(int k=1;k<n;k++)
+        {
+            if(a[k]<(s->st[s->top]))
+            {
+                push(s,a[k]);
+                push2(s,k);
+                continue;
+            }
+            while(a[k]>(s->st[s->top])&&!isempty(s))
+            {
+                pop(s);
+            }
+            if(a[k]<(s->st[s->top])||isempty(s))
+            {
+                push(s,a[k]);
+                push2(s,k);
+            }
+            else if(a[k]==(s->st[s->top]))
+            {
+                right[k]=1+right[s->tpos[s->top]];
+                pop(s);
+                push(s,a[k]);
+                push2(s,k);
+            }
+        }
+        for(int j=0;j<n;j++)
+            printf("%d ",(left[j]+right[n-1-j]));
+        printf("\n");
+    }
+    }  
+    return 0;
+}
